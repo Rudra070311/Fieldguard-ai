@@ -1,0 +1,1 @@
+/* Secure compare placeholder */

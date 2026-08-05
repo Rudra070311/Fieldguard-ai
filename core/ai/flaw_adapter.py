@@ -1,0 +1,1 @@
+"""AI flaw adapter placeholder."""

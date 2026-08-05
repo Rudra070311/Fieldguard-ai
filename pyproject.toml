@@ -1,0 +1,4 @@
+[tool.poetry]
+name = "ideez"
+version = "0.1.0"
+description = "iDeez project skeleton"

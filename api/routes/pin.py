@@ -1,0 +1,1 @@
+"""PIN routes placeholder."""

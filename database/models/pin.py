@@ -1,0 +1,1 @@
+"""PIN model placeholder."""

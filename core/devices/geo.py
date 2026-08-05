@@ -1,0 +1,1 @@
+"""Geo device placeholder."""
