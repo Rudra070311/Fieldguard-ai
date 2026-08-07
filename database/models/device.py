@@ -9,7 +9,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship, mapped_column
 from sqlalchemy.sql import func
 import uuid
-from models import Base
+from ..base import Base
 
 class Device(Base):
     __tablename__ = "devices"
