@@ -94,7 +94,7 @@ class Risk(Base):
         nullable=False,    
     )
     
-    factors_contribution = mapped_column(
+    factor_contributions = mapped_column(
         JSONB,
         nullable=True,    
     )
