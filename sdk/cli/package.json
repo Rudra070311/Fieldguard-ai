@@ -1,0 +1,24 @@
+{
+  "name": "ideez",
+  "version": "1.0.0",
+  "description": "Official iDeez security SDK and CLI",
+  "type": "module",
+  "bin": {
+    "ideez": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "ideez",
+    "authentication",
+    "security",
+    "identity"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.0.0"
+  }
+}
