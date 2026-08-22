@@ -1,6 +1,6 @@
 import uuid
 from sqlalchemy import DateTime, ForeignKey, String, func
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy.dialects.postgresql import UUID, JSON
 from sqlalchemy.orm import mapped_column
 from ..base import Base
 
@@ -47,8 +47,9 @@ class Audit(Base):
         nullable=True,
     )
 
-    metadata = mapped_column(
-        JSONB,
+    event_metadata = mapped_column(
+        "metadata",
+        JSON,
         nullable=True,
     )
 

@@ -19,7 +19,7 @@ class Pin(Base):
         CheckConstraint(
             "failed_attempts >= 0",
             name="ck_pin_failed_attempts_nonnegative",
-        )
+        ),
     )
     
     id = mapped_column(

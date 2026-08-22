@@ -1,125 +1,130 @@
+from __future__ import annotations
+import uuid
+from datetime import datetime
+from typing import Optional
 from sqlalchemy import (
+    CheckConstraint,
     DateTime,
     Float,
     ForeignKey,
     String,
-    CheckConstraint,
+    func,
 )
-from sqlalchemy.dialects.postgresql import UUID, JSONB
-from sqlalchemy.orm import mapped_column
-from sqlalchemy.sql import func
-import uuid
+from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy.orm import Mapped, mapped_column
 from ..base import Base
 
 class Risk(Base):
     __tablename__ = "risks"
-    
-    id = mapped_column(
+
+    __table_args__ = (
+        CheckConstraint(
+            "risk_score >= 0 AND risk_score <= 1",
+            name="ck_risk_score_range",
+        ),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
         primary_key=True,
         default=uuid.uuid4,
     )
 
-    user_id = mapped_column(
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
 
-    organization_id = mapped_column(
+    organization_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
         ForeignKey("organizations.id", ondelete="SET NULL"),
         nullable=True,
         index=True,
     )
-    
-    session_id = mapped_column(
+
+    session_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("sessions.id", ondelete="CASCADE"),
         nullable=True,
         index=True,
     )
-    
-    device_id = mapped_column(
+
+    device_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True),
         ForeignKey("devices.id", ondelete="CASCADE"),
         nullable=True,
         index=True,
     )
-    
-    risk_factors = mapped_column(
+
+    risk_factors: Mapped[Optional[dict]] = mapped_column(
         JSONB,
         nullable=True,
     )
-    
-    risk_score = mapped_column(
+
+    risk_score: Mapped[float] = mapped_column(
         Float,
-        __table_args__ = (
-            CheckConstraint(
-                "risk_score >= 0 AND risk_score <= 1",
-                name="ck_risk_score_range",
-            ),
-        ),
         nullable=False,
         default=0.0,
     )
 
-    risk_level = mapped_column(
+    risk_level: Mapped[str] = mapped_column(
         String(32),
         nullable=False,
         default="low",
     )
-    
-    action = mapped_column(
+
+    action: Mapped[Optional[str]] = mapped_column(
         String(128),
         nullable=True,
     )
-    
-    model_version = mapped_column(
-        String(32),
-        nullable=True,
-    )
-    
-    policy_version = mapped_column(
-        String(32),
-        nullable=True,
-    )
-    
-    embedding_version = mapped_column(
+
+    model_version: Mapped[Optional[str]] = mapped_column(
         String(32),
         nullable=True,
     )
 
-    explanation = mapped_column(
-        JSONB,
-        nullable=False,    
+    policy_version: Mapped[Optional[str]] = mapped_column(
+        String(32),
+        nullable=True,
     )
-    
-    factor_contributions = mapped_column(
-        JSONB,
-        nullable=True,    
+
+    embedding_version: Mapped[Optional[str]] = mapped_column(
+        String(32),
+        nullable=True,
     )
-    
-    event_type = mapped_column(
+
+    explanation: Mapped[dict] = mapped_column(
+        JSONB,
+        nullable=False,
+    )
+
+    factor_contributions: Mapped[Optional[dict]] = mapped_column(
+        JSONB,
+        nullable=True,
+    )
+
+    event_type: Mapped[str] = mapped_column(
         String(64),
         nullable=False,
         index=True,
     )
-    
-    request_id = mapped_column(
+
+    request_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True),
         nullable=True,
         index=True,
     )
-    
-    ip_address = mapped_column(
+
+    ip_address: Mapped[Optional[str]] = mapped_column(
         String(45),
         nullable=True,
     )
-    
-    created_at = mapped_column(
+
+    created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
         server_default=func.now(),
         index=True,
     )
-    

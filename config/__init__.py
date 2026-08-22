@@ -8,11 +8,11 @@ from .constants import (
     OTPPurpose,
     RiskAction,
     RiskLevel,
-    TokenType,
+    TokenType
 )
 from .logging import configure_logging, get_logger
 from .secrets import SecretManager
-from .settings import Settings, settings
+from .settings import Settings
 
 __all__ = [
     "AuditEvent",
@@ -27,7 +27,6 @@ __all__ = [
     "TokenType",
     "SecretManager",
     "Settings",
-    "settings",
     "configure_logging",
-    "get_logger",
+    "get_logger"
 ]
